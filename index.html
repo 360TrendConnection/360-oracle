@@ -115,7 +115,6 @@
   }
 
   input[type="text"],
-  input[type="password"],
   input[type="date"],
   input[type="time"],
   select,
@@ -133,7 +132,6 @@
   }
 
   input[type="text"]:focus,
-  input[type="password"]:focus,
   input[type="date"]:focus,
   input[type="time"]:focus,
   select:focus,
@@ -425,134 +423,19 @@
     margin-bottom: 44px;
   }
 
-  .reading-header .brand-line {
-    margin-bottom: 12px;
-  }
-
-  .reading-cards-summary {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin: 20px 0 32px;
-  }
-
-  .card-chip {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    font-style: italic;
-    color: var(--smoke);
-    background: rgba(184,147,58,0.08);
-    border: 1px solid rgba(184,147,58,0.2);
-    border-radius: 2px;
-    padding: 5px 12px;
-  }
-
-  .card-chip .pos {
-    font-style: normal;
-    font-family: 'Cinzel', serif;
-    font-size: 9px;
-    letter-spacing: 1px;
-    color: var(--gold);
-    display: block;
-    text-transform: uppercase;
-    margin-bottom: 2px;
-  }
-
-  .reading-body {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .reading-section {
-    margin-bottom: 40px;
-    opacity: 0;
-    animation: fadeUp 0.6s ease forwards;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reading-section-label {
-    font-family: 'Cinzel', serif;
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(184,147,58,0.15);
-  }
-
-  .reading-section p {
+  .prompt-box-area {
+    background: rgba(240,234,216,0.04);
+    border: 1px solid var(--gold);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 24px;
+    font-family: monospace;
+    font-size: 14px;
     color: #ddd5c0;
-    font-size: 18px;
-    line-height: 1.85;
-    margin-bottom: 14px;
-  }
-
-  .reading-section p:last-child { margin-bottom: 0; }
-
-  .closing-message {
-    background: rgba(184,147,58,0.06);
-    border-left: 2px solid var(--gold);
-    padding: 24px 28px;
-    margin-top: 48px;
-    font-style: italic;
-    font-size: 20px;
-    color: var(--bone);
-    line-height: 1.75;
-  }
-
-  .loading-state {
-    text-align: center;
-    padding: 48px 0;
-  }
-
-  .loading-spiral {
-    width: 40px;
-    height: 40px;
-    border: 2px solid rgba(184,147,58,0.15);
-    border-top-color: var(--gold);
-    border-radius: 50%;
-    animation: spin 1.2s linear infinite;
-    margin: 0 auto 20px;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .loading-text {
-    font-style: italic;
-    color: var(--smoke);
-    font-size: 16px;
-  }
-
-  .error-state {
-    background: rgba(139,26,26,0.1);
-    border: 1px solid rgba(139,26,26,0.3);
-    border-radius: 3px;
-    padding: 20px 24px;
-    color: #e8a0a0;
-    font-size: 15px;
-  }
-
-  .divider {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 36px 0;
-    color: rgba(184,147,58,0.3);
-    font-size: 11px;
-    letter-spacing: 4px;
-  }
-
-  .divider::before, .divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(184,147,58,0.15);
+    white-space: pre-wrap;
+    text-align: left;
+    max-height: 300px;
+    overflow-y: auto;
   }
 
   .type-tabs {
@@ -600,19 +483,12 @@
 <div class="container">
   <header>
     <div class="brand-line">360TrendConnection</div>
-    <h1>360 Oracle<br>Reading Engine</h1>
+    <h1>360 Oracle<br>Prompt Engine</h1>
     <div class="subtitle">Hoodoo Tarot · Astrology · Depth Psychology</div>
     <div class="ornament">✦ ✦ ✦</div>
   </header>
 
   <div id="reading-form">
-    <div class="section">
-      <span class="section-label">Engine Access Credentials</span>
-      <div class="form-grid" style="grid-template-columns: 1fr;">
-        <input type="password" id="anthropic-key" placeholder="Enter your Anthropic API Key (sk-ant-...)" />
-      </div>
-    </div>
-
     <div class="section">
       <span class="section-label">Reading Focus</span>
       <div class="type-tabs">
@@ -673,8 +549,8 @@
     </div>
 
     <div class="generate-wrap">
-      <button class="btn btn-primary" id="generate-btn" onclick="generateReading()">
-        Cast the Reading
+      <button class="btn btn-primary" id="generate-btn" onclick="generatePrompt()">
+        Generate Oracle Prompt
       </button>
     </div>
   </div>
@@ -682,20 +558,17 @@
   <div id="reading-output">
     <div class="reading-container">
       <div class="reading-header">
-        <div class="brand-line">The 360 Oracle speaks</div>
-        <h1 style="font-size:clamp(22px,4vw,34px);">Your Reading</h1>
-        <div class="reading-cards-summary" id="cards-summary"></div>
+        <div class="brand-line">The 360 Pipeline Ready</div>
+        <h1 style="font-size:clamp(22px,4vw,34px);">Your Copy-Paste Prompt</h1>
+        <p style="color:var(--smoke); margin-top:10px; font-style:italic; font-size:15px;">Copy the block below and paste it into Claude or Gemini to generate your custom reading.</p>
       </div>
 
-      <div id="loading-state" class="loading-state">
-        <div class="loading-spiral"></div>
-        <p class="loading-text">The Oracle is reading the roots and the stars&hellip;</p>
-      </div>
+      <div class="prompt-box-area" id="prompt-content"></div>
 
-      <div id="reading-body" class="reading-body" style="display:none;"></div>
+      <button class="btn btn-primary" id="copy-btn" onclick="copyPromptText()">Copy Prompt to Clipboard</button>
 
       <div class="new-reading-wrap">
-        <button class="btn btn-secondary" onclick="resetReading()">Begin a New Reading</button>
+        <button class="btn btn-secondary" onclick="resetReading()">Modify Options</button>
       </div>
     </div>
   </div>
@@ -838,11 +711,6 @@ let readingType = 'general';
 window.onload = () => {
   buildSpread();
   buildCardGrid();
-  
-  const savedKey = localStorage.getItem('360_oracle_key');
-  if (savedKey) {
-    document.getElementById('anthropic-key').value = savedKey;
-  }
 };
 
 function selectType(tab) {
@@ -961,19 +829,11 @@ function randomizeAll() {
   renderPositions();
 }
 
-// ─── REPAIRED STRICT ENVELOPE PACKAGING TRANSMISSION ────────────────────────
-async function generateReading() {
-  const apiKey = document.getElementById('anthropic-key').value.trim();
-  if (!apiKey) {
-    alert('Please enter an Anthropic API Key to access the engine.');
-    return;
-  }
-  
-  localStorage.setItem('360_oracle_key', apiKey);
-
+// ─── NEW WORKAROUND PROMPT PACKAGING LOGIC ──────────────────────────────────
+function generatePrompt() {
   const cards = Object.keys(selectedCards);
   if (cards.length === 0) {
-    alert('Please select at least one card before casting the reading.');
+    alert('Please select at least one card before generating your prompt.');
     return;
   }
 
@@ -994,21 +854,21 @@ async function generateReading() {
       return `${pos.label}: ${sel.card.name}${sel.card.traditional ? ` (${sel.card.traditional})` : ''}${sel.reversed ? ' [REVERSED]' : ''}`;
     }).join('\n');
 
-  const systemPrompt = `You are the 360 Oracle Reading Engine — an elite intuitive tarot, astrology, and psychological pattern analysis system built on the Hoodoo Tarot by Tayannah Lee McQuillar, a 78-card deck rooted in African American spiritual tradition, rootwork, and conjure. The deck's Major Arcana are called "The Elders." The suits are Knives (Swords/Air/Mind), Baskets (Cups/Water/Emotion), Bones (Wands/Fire/Spirit/Will), and Coins (Earth/Material). Court cards include Mother and Father instead of Queen and King in some suits.
+  // Unified absolute payload structural instruction string
+  const finalPrompt = `Act as the 360 Oracle Reading Engine — an elite intuitive tarot, astrology, and psychological pattern analysis system built on the Hoodoo Tarot by Tayannah Lee McQuillar, a 78-card deck rooted in African American spiritual tradition, rootwork, and conjure. The deck's Major Arcana are called "The Elders." The suits are Knives (Swords/Air/Mind), Baskets (Cups/Water/Emotion), Bones (Wands/Fire/Spirit/Will), and Coins (Earth/Material).
 
-You must synthesize the card, position, reading type, astrology, and emotional/psychological context into one coherent, specific, intimate reading.
+Please synthesize the card parameters, position layouts, reading focus types, astrology coordinates, and emotional/psychological data provided below into one cohesive, specific, deeply layered prose reading.
 
-Reading guidelines:
-- Never give generic card meanings. Every interpretation must be specific to this question and context.
-- Draw on psychological depth, attachment theory, nervous system awareness, ancestral pattern recognition.
-- Reference the Hoodoo Tarot's cultural rootedness when relevant — but never exploit or trivialize it.
-- Synthesize astrology if birth data is given (tropical Western, psychological lens).
-- Be direct but compassionate. Poetic but practical. Truth-telling without fear-mongering.
-- Avoid em dashes. Avoid spiritual bypassing. Avoid motivational clichés.
-- Do not make definitive predictions. Speak in energies, patterns, and possibilities.
-- Write in flowing prose paragraphs, not bullet lists.
+CRITICAL INSTRUCTIONS:
+- Never give generic card definitions. Every interpretation must be specific to this exact inquiry and context.
+- Draw extensively on psychological depth, attachment patterns, nervous system states, and ancestral tracking.
+- Reference the Hoodoo Tarot's cultural lineage cleanly where relevant — do not trivialize it.
+- Synthesize any provided natal/astrology coordinates through a psychological, tropical Western lens.
+- Be direct, compassionate, and truth-telling. Avoid motivational clichés or spiritual bypassing.
+- Do not make definitive, rigid future predictions. Speak in trends, choices, patterns, and soul alignment.
+- Write in flowing prose paragraphs. Do not use bulleted lists or em dashes.
 
-Structure your reading with these labeled sections (use these exact section headers):
+Structure your reading output using these exact labeled section headers:
 OPENING ENERGY
 WHAT THE CARDS REVEAL
 ASTROLOGY CONFIRMS
@@ -1018,149 +878,47 @@ THE ORACLE'S COUNSEL
 TIMING AND SEASON
 CLOSING MESSAGE
 
-Each section should be substantive — 2 to 4 paragraphs minimum for most sections, shorter only for TIMING AND SEASON and CLOSING MESSAGE.`;
+Each section must be deeply substantive (2 to 4 paragraphs minimum per block, except shorter constraints for TIMING AND SEASON and CLOSING MESSAGE).
 
-  const userMessage = `Reading Type: ${readingType.toUpperCase()}
-${name ? `Querent: ${name}` : 'Querent: Anonymous'}
+Here are the operational telemetry parameters for this session:
+Reading Focus: ${readingType.toUpperCase()}
+${name ? `Querent Name: ${name}` : 'Querent Name: Anonymous'}
 ${birthDate ? `Birth Date: ${birthDate}` : ''}
 ${birthTime ? `Birth Time: ${birthTime}` : ''}
 ${birthPlace ? `Birth Place: ${birthPlace}` : ''}
 ${partnerName || partnerBirth ? `\nSecond Person: ${partnerName || 'unnamed'}${partnerBirth ? `, born ${partnerBirth}` : ''}${partnerPlace ? `, ${partnerPlace}` : ''}` : ''}
 
-Question / Inquiry:
-${question || '(No specific question given — general reading)'}
+Inquiry Question:
+${question || '(General check-in — look at core active life themes)'}
 
-Cards Drawn:
+Tarot Spread Cards Selected:
 ${cardLines}
 
-${context ? `Additional Context:\n${context}` : ''}
+${context ? `Additional Unresolved Context:\n${context}` : ''}
 
-Please generate a full, deeply specific reading following the structure outlined. Do not rush any section. This reading should feel like it sees the deeper truth underneath the question.`;
+Please render your full reading now.`;
 
   document.getElementById('reading-form').style.display = 'none';
   document.getElementById('reading-output').style.display = 'block';
-
-  const summaryEl = document.getElementById('cards-summary');
-  summaryEl.innerHTML = '';
-  currentSpread.filter(p => selectedCards[p.key]).forEach(pos => {
-    const sel = selectedCards[pos.key];
-    const chip = document.createElement('div');
-    chip.className = 'card-chip';
-    chip.innerHTML = `<span class="pos">${pos.label}</span>${sel.card.name}${sel.reversed ? ' (R)' : ''}`;
-    summaryEl.appendChild(chip);
-  });
-
-  const loadEl = document.getElementById('loading-state');
-  const bodyEl = document.getElementById('reading-body');
-  loadEl.style.display = 'block';
-  bodyEl.style.display = 'none';
-  bodyEl.innerHTML = '';
-
-  try {
-    // Encapsulated payload structure compiled to enforce continuous strict raw formatting explicitly
-    const payload = {
-      model: "claude-3-5-sonnet-20241022",
-      max_tokens: 4000,
-      system: systemPrompt,
-      messages: [{ role: 'user', content: userMessage }]
-    };
-
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify(payload)
-    });
-
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.error?.message || `HTTP error! status: ${response.status}`);
-    }
-
-    const cleanText = data.content?.find(b => b.type === 'text')?.text || '';
-    if (!cleanText) throw new Error('Could not find generation payload. Confirm API balance or configuration settings.');
-    renderReading(cleanText);
-  } catch (err) {
-    loadEl.style.display = 'none';
-    bodyEl.style.display = 'block';
-    bodyEl.innerHTML = `<div class="error-state">The Oracle encountered an interruption: ${err.message}<br><br>Please verify your API key validity, network connectivity, and retry.</div>`;
-  }
+  
+  const contentBox = document.getElementById('prompt-content');
+  contentBox.textContent = finalPrompt;
+  
+  document.getElementById('copy-btn').textContent = "Copy Prompt to Clipboard";
 }
 
-function renderReading(text) {
-  const loadEl = document.getElementById('loading-state');
-  const bodyEl = document.getElementById('reading-body');
-  loadEl.style.display = 'none';
-  bodyEl.style.display = 'block';
-
-  const sectionKeys = [
-    'OPENING ENERGY',
-    'WHAT THE CARDS REVEAL',
-    'ASTROLOGY CONFIRMS',
-    'THE HIDDEN PATTERN',
-    'WHAT YOU MAY NOT BE SEEING',
-    "THE ORACLE'S COUNSEL",
-    'TIMING AND SEASON',
-    'CLOSING MESSAGE'
-  ];
-
-  let html = '';
-  let remainingText = text;
-
-  sectionKeys.forEach((key, i) => {
-    const nextKey = sectionKeys[i + 1];
-    const pattern = new RegExp(key.replace(/'/g, "[''']").replace(/\(/g, '\\(').replace(/\)/g, '\\)'), 'i');
-    const nextPattern = nextKey ? new RegExp(nextKey.replace(/'/g, "[''']").replace(/\(/g, '\\(').replace(/\)/g, '\\)'), 'i') : null;
-
-    const startMatch = remainingText.search(pattern);
-    if (startMatch === -1) return;
-
-    const contentStart = startMatch + key.length;
-    let content;
-    if (nextPattern) {
-      const endMatch = remainingText.search(nextPattern);
-      content = endMatch > -1 ? remainingText.substring(contentStart, endMatch) : remainingText.substring(contentStart);
-      remainingText = endMatch > -1 ? remainingText.substring(endMatch) : '';
-    } else {
-      content = remainingText.substring(contentStart);
-    }
-
-    content = content.replace(/^[\s:*#]+/, '').trim();
-    const paragraphs = content.split(/\n\n+/).filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('');
-
-    const delay = i * 0.15;
-    if (key === 'CLOSING MESSAGE') {
-      html += `<div class="closing-message" style="animation-delay:${delay}s">${paragraphs}</div>`;
-    } else {
-      html += `
-        <div class="reading-section" style="animation-delay:${delay}s">
-          <div class="reading-section-label">${key}</div>
-          ${paragraphs}
-        </div>`;
-      if (i < sectionKeys.length - 2) {
-        html += `<div class="divider" style="animation-delay:${delay + 0.1}s">✦</div>`;
-      }
-    }
+function copyPromptText() {
+  const text = document.getElementById('prompt-content').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    document.getElementById('copy-btn').textContent = "✓ Copied Successfully!";
+  }).catch(err => {
+    alert("Could not automatically copy. Please tap and select the text manually inside the box.");
   });
-
-  if (!html.trim()) {
-    const paragraphs = text.split(/\n\n+/).filter(p => p.trim()).map(p => `<p>${p.trim()}</p>`).join('');
-    html = `<div class="reading-section"><div class="reading-section-label">The Reading</div>${paragraphs}</div>`;
-  }
-
-  bodyEl.innerHTML = html;
 }
 
 function resetReading() {
   document.getElementById('reading-form').style.display = 'block';
   document.getElementById('reading-output').style.display = 'none';
-  selectedCards = {};
-  renderPositions();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
